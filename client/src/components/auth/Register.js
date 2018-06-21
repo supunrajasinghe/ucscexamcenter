@@ -1,5 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+import axios from "axios";
+import classnames from "classnames";
+
 import "../../css/register.css";
 
 class Register extends React.Component {
@@ -30,10 +33,15 @@ class Register extends React.Component {
       password2: this.state.password2
     };
 
-    console.log(newUser);
+    axios
+      .post("/api/users/register", newUser)
+      .then(res => console.log(res.data))
+      .catch(err => this.setState({ errors: err.response.data }));
   }
 
   render() {
+    const errors = this.state.errors;
+
     return (
       <div>
         <div className="signUpWindow">
@@ -45,36 +53,64 @@ class Register extends React.Component {
               <form onSubmit={this.onSubmit}>
                 <input
                   type="text"
-                  className="form-control"
+                  className={classnames("form-control", {
+                    "is-invalid": errors.indexNo
+                  })}
                   name="indexNo"
                   placeholder="Index Number"
                   value={this.state.indexNo}
                   onChange={this.onChange}
                 />
+                {errors.indexNo && (
+                  <div className="invalid-feedback float-left">
+                    {errors.indexNo}
+                  </div>
+                )}
                 <input
                   type="email"
-                  className="form-control"
+                  className={classnames("form-control", {
+                    "is-invalid": errors.email
+                  })}
                   name="email"
                   placeholder="Email"
                   value={this.state.email}
                   onChange={this.onChange}
                 />
+                {errors.email && (
+                  <div className="invalid-feedback float-left">
+                    {errors.email}
+                  </div>
+                )}
                 <input
                   type="password"
-                  className="form-control"
+                  className={classnames("form-control", {
+                    "is-invalid": errors.password
+                  })}
                   name="password"
                   placeholder="Password"
                   value={this.state.password}
                   onChange={this.onChange}
                 />
+                {errors.password && (
+                  <div className="invalid-feedback float-left">
+                    {errors.password}
+                  </div>
+                )}
                 <input
                   type="password"
-                  className="form-control"
+                  className={classnames("form-control", {
+                    "is-invalid": errors.password2
+                  })}
                   name="password2"
                   placeholder="Confirm password"
                   value={this.state.password2}
                   onChange={this.onChange}
                 />
+                {errors.password2 && (
+                  <div className="invalid-feedback float-left">
+                    {errors.password2}
+                  </div>
+                )}
                 <button type="submit" className="btn btn-success">
                   SUBMIT
                 </button>
