@@ -4,6 +4,7 @@ import { withRouter } from "react-router-dom";
 import classnames from "classnames";
 import { connect } from "react-redux";
 import { registerUser } from "../../actions/authActions";
+import TextFieldGroup from "../common/TextFieldGroup";
 
 import "../../css/register.css";
 
@@ -19,6 +20,12 @@ class Register extends React.Component {
     };
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    if (this.props.auth.isAuthenticated) {
+      this.props.history.push("/dashboard");
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -54,73 +61,46 @@ class Register extends React.Component {
             <h1>CREATE NEW ACCOUNT</h1>
           </div>
           <div className="signUpForm">
-            <div className="form-group">
-              <form onSubmit={this.onSubmit}>
-                <input
-                  type="text"
-                  className={classnames("form-control", {
-                    "is-invalid": errors.indexNo
-                  })}
-                  name="indexNo"
-                  placeholder="Index Number"
-                  value={this.state.indexNo}
-                  onChange={this.onChange}
-                />
-                {errors.indexNo && (
-                  <div className="invalid-feedback float-left">
-                    {errors.indexNo}
-                  </div>
-                )}
-                <input
-                  type="email"
-                  className={classnames("form-control", {
-                    "is-invalid": errors.email
-                  })}
-                  name="email"
-                  placeholder="Email"
-                  value={this.state.email}
-                  onChange={this.onChange}
-                />
-                {errors.email && (
-                  <div className="invalid-feedback float-left">
-                    {errors.email}
-                  </div>
-                )}
-                <input
-                  type="password"
-                  className={classnames("form-control", {
-                    "is-invalid": errors.password
-                  })}
-                  name="password"
-                  placeholder="Password"
-                  value={this.state.password}
-                  onChange={this.onChange}
-                />
-                {errors.password && (
-                  <div className="invalid-feedback float-left">
-                    {errors.password}
-                  </div>
-                )}
-                <input
-                  type="password"
-                  className={classnames("form-control", {
-                    "is-invalid": errors.password2
-                  })}
-                  name="password2"
-                  placeholder="Confirm password"
-                  value={this.state.password2}
-                  onChange={this.onChange}
-                />
-                {errors.password2 && (
-                  <div className="invalid-feedback float-left">
-                    {errors.password2}
-                  </div>
-                )}
-                <button type="submit" className="btn btn-success">
-                  SUBMIT
-                </button>
-              </form>
-            </div>
+            <form onSubmit={this.onSubmit}>
+              <TextFieldGroup
+                type="text"
+                name="indexNo"
+                placeholder="Index Number"
+                value={this.state.indexNo}
+                onChange={this.onChange}
+                error={errors.indexNo}
+              />
+
+              <TextFieldGroup
+                type="email"
+                name="email"
+                placeholder="Index email"
+                value={this.state.email}
+                onChange={this.onChange}
+                error={errors.email}
+              />
+
+              <TextFieldGroup
+                type="password"
+                name="password"
+                placeholder="password"
+                value={this.state.password}
+                onChange={this.onChange}
+                error={errors.password}
+              />
+
+              <TextFieldGroup
+                type="password"
+                name="password2"
+                placeholder="confirm password"
+                value={this.state.password2}
+                onChange={this.onChange}
+                error={errors.password2}
+              />
+              <button type="submit" className="btn btn-success">
+                SUBMIT
+              </button>
+            </form>
           </div>
         </div>
       </div>
