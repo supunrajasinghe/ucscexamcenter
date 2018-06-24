@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router-dom";
-import classnames from "classnames";
 import { connect } from "react-redux";
 import { registerUser } from "../../actions/authActions";
 import TextFieldGroup from "../common/TextFieldGroup";
@@ -57,7 +56,7 @@ class Register extends React.Component {
     return (
       <div>
         <div className="signUpWindow">
-          <div className="signUpHeader">
+          <div className="row signUpHeader">
             <h1>CREATE NEW ACCOUNT</h1>
           </div>
           <div className="signUpForm">

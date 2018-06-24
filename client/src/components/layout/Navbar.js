@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
+import { clearCurrentProfile } from "../../actions/profileAction";
 
 class Navbar extends React.Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class Navbar extends React.Component {
 
   onLogoutClick(e) {
     e.preventDefault();
+    this.props.clearCurrentProfile();
     this.props.logoutUser();
   }
 
@@ -53,12 +55,12 @@ class Navbar extends React.Component {
     );
 
     return (
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <Link className="navbar-brand" to="/">
           UCSC
         </Link>
         <button
-          class="navbar-toggler"
+          className="navbar-toggler"
           type="button"
           data-toggle="collapse"
           data-target="#navbarNavAltMarkup"
@@ -66,10 +68,10 @@ class Navbar extends React.Component {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon" />
+          <span className="navbar-toggler-icon" />
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
+        <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div className="navbar-nav">
             <ul className="nav navbar-nav">
               <li>
                 <Link className="nav-link" to="/">
@@ -97,5 +99,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logoutUser }
+  { logoutUser, clearCurrentProfile }
 )(Navbar);
