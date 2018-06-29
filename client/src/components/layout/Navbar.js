@@ -21,15 +21,15 @@ class Navbar extends React.Component {
     const { isAuthenticated, user } = this.props.auth;
 
     const authLinks = (
-      <ul className="nav navbar-nav ml-auto">
+      <ul className="navbar-nav ml-auto">
         <li className="nav-item">
-          <a className="nav-link" href="#">
+          <Link className="nav-link" to="/dashboard">
             {user.indexNo}
-          </a>
+          </Link>
         </li>
         <li className="nav-item">
           <a
-            href="#"
+            href=""
             onClick={this.onLogoutClick.bind(this)}
             className="nav-link"
           >
@@ -40,7 +40,7 @@ class Navbar extends React.Component {
     );
 
     const guestLinks = (
-      <ul className="nav navbar-nav ml-auto">
+      <ul className="navbar-nav ml-auto">
         <li className="nav-item">
           <Link className="nav-link" to="/register">
             <span className="glyphicon glyphicon-user" /> Signup

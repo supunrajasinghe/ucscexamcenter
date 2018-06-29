@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
+//import PropTypes from "prop-types";
 
 class Landing extends React.Component {
   constructor(props) {
@@ -25,6 +25,6 @@ class Landing extends React.Component {
   }
 }
 
-Landing.propTypes = {};
+//Landing.propTypes = {};
 
 export default Landing;
