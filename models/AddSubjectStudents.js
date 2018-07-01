@@ -1,16 +1,9 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const AddSubjectSchema = new Schema({
+const AddSubjectStudentSchema = new Schema({
+  indexNO: {},
   degree: {
-    type: String,
-    required: true
-  },
-  year: {
-    type: String,
-    required: true
-  },
-  semester: {
     type: String,
     required: true
   },
@@ -24,8 +17,15 @@ const AddSubjectSchema = new Schema({
   },
   type: {
     type: String,
-    default: "0"
+    required: true
+  },
+  date: {
+    type: Date,
+    default: Date.now
   }
 });
 
-module.exports = AddSubject = mongoose.model("subjects", AddSubjectSchema);
+module.exports = AddSubjectStudent = mongoose.model(
+  "registerSubjects",
+  AddSubjectStudentSchema
+);

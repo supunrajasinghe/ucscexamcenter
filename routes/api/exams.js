@@ -3,6 +3,8 @@ const router = express.Router();
 
 //load Exam model
 const Exam = require("../../models/Exam");
+//load addsubject model
+const AddSubject = require("../../models/AddSubject");
 
 //load input validations
 const validateExamInput = require("../../validation/exam");
@@ -33,7 +35,11 @@ router.post("/exam", (req, res) => {
     deadline: req.body.deadline
   };
 
-  Exam.findOne({ examination: req.body.examintaion }).then(exam => {
+  const setSubject = {
+    type: 1
+  };
+
+  Exam.findOne({ examination: req.body.examination }).then(exam => {
     if (exam) {
       //update
       Exam.findOneAndUpdate(
@@ -41,13 +47,73 @@ router.post("/exam", (req, res) => {
         { $set: examFields },
         { new: true }
       )
-        .then(exam => res.json(exam))
+        .then(
+          AddSubject.find({
+            degree: req.body.degree,
+            year: req.body.year,
+            semester: req.body.semester
+          })
+            .then(subjects => {
+              if (subjects) {
+                AddSubject.updateMany(
+                  {
+                    degree: req.body.degree,
+                    year: req.body.year,
+                    semester: req.body.semester
+                  },
+                  { $set: setSubject },
+                  { new: true }
+                )
+                  .then(updateSub => {
+                    res.json(updateSub);
+                  })
+                  .catch(err =>
+                    res
+                      .status(404)
+                      .json({ update: "there are no subjects to update" })
+                  );
+              }
+            })
+            .catch(err =>
+              res.status(404).json({ subjects: "there are no subjects update" })
+            )
+        )
         .catch(err => res.json(err));
     } else {
       //make new subject and save
       new Exam(examFields)
         .save()
-        .then(exam => res.json(exam))
+        .then(
+          AddSubject.find({
+            degree: req.body.degree,
+            year: req.body.year,
+            semester: req.body.semester
+          })
+            .then(subjects => {
+              if (subjects) {
+                AddSubject.updateMany(
+                  {
+                    degree: req.body.degree,
+                    year: req.body.year,
+                    semester: req.body.semester
+                  },
+                  { $set: setSubject },
+                  { new: true }
+                )
+                  .then(updateSub => {
+                    res.json(updateSub);
+                  })
+                  .catch(err =>
+                    res
+                      .status(404)
+                      .json({ update: "there are no subjects to update" })
+                  );
+              }
+            })
+            .catch(err =>
+              res.status(404).json({ subjects: "there are no subjects update" })
+            )
+        )
         .catch(err => res.json(err));
     }
   });

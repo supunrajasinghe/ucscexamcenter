@@ -116,23 +116,22 @@ class CreateProfile extends React.Component {
         value: 0
       },
       {
-        label: "1st year",
-        value: "1st year"
+        label: "1",
+        value: "1"
       },
       {
-        label: "2nd year",
-        value: "2nd year"
+        label: "2",
+        value: "2"
       },
       {
-        label: "3rd year",
-        value: "3rd year"
+        label: "3",
+        value: "3"
       },
       {
-        label: "4th year",
-        value: "4th year"
+        label: "4",
+        value: "4"
       }
     ];
-
     return (
       <div className="create-profile">
         <div className="container">

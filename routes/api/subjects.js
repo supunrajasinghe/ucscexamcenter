@@ -1,8 +1,15 @@
 const express = require("express");
 const router = express.Router();
+const mongoose = require("mongoose");
+const passport = require("passport");
 
+//load profile model
+const Profile = require("../../models/profile");
+//load user profile
+const User = require("../../models/User");
 //load addsubject model
 const AddSubject = require("../../models/AddSubject");
+//load addsubjectstudents model
 
 //load input validations
 const validateAddSubjects = require("../../validation/addSubject");
@@ -53,23 +60,91 @@ router.post("/addsubject", (req, res) => {
 });
 
 //@route   POST api/subjects/repeat
-//@desc    show all subjects to students
+//@desc    show all repeat subject to students
 //@access  Public
-router.post("/repeat", (req, res) => {
-  const errors = {};
+router.get(
+  "/repeat",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+    Profile.findOne({ user: req.user.id })
+      .populate("user", ["email"])
+      .then(profile => {
+        if (!profile) {
+          errors.noprofile = "There is no profile for this user";
+          return res.status(404).json(errors);
+        }
 
-  const degree = req.body.degree;
+        AddSubject.find({
+          degree: profile.degree,
+          year: { $ne: profile.year },
+          type: "1"
+        })
+          .then(subjects => {
+            if (!subjects) {
+              errors.nosubjects = "There are no subjects for this course";
+              return res.status(404).json(errors);
+            }
 
-  AddSubject.find({ degree })
-    .then(subjects => {
-      if (!subjects) {
-        errors.nosubjects = "There are no subjects for this course";
-        return res.status(404).json(errors);
-      }
+            res.json(subjects);
+          })
+          .catch(err =>
+            res.status(404).json({ subjects: "there are no subjects" })
+          );
+      })
+      .catch(err => res.status(404).json(err));
+  }
+);
 
-      res.json(subjects);
-    })
-    .catch(err => res.status(404).json({ subjects: "there are no subjects" }));
+//@route   POST api/subjects/nonrepeat
+//@desc    show specific subject to students(1st time)
+//@access  Public
+router.get(
+  "/nonrepeat",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+    Profile.findOne({ user: req.user.id })
+      .populate("user", ["email"])
+      .then(profile => {
+        if (!profile) {
+          errors.noprofile = "There is no profile for this user";
+          return res.status(404).json(errors);
+        }
+
+        AddSubject.find({
+          degree: profile.degree,
+          year: profile.year,
+          type: "1"
+        })
+          .then(subjects => {
+            if (!subjects) {
+              errors.nosubjects = "There are no subjects for this course";
+              return res.status(404).json(errors);
+            }
+
+            res.json(subjects);
+          })
+          .catch(err =>
+            res.status(404).json({ subjects: "there are no subjects" })
+          );
+      })
+      .catch(err => res.status(404).json(err));
+  }
+);
+
+//@route   POST api/subjects/registersubjects
+//@desc    register subjects for students
+//@access  Public
+router.post("/registersubjects", (req, res) => {
+  console.log(req.body);
+
+  const subject = {
+    degree: req.body.degree,
+    subjectCode: req.body.subjectCode,
+    subjectName: req.body.subjectName,
+    type: req.body.type
+  };
 });
 
 module.exports = router;

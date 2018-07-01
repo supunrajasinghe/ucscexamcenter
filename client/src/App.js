@@ -4,6 +4,7 @@ import jwt_decode from "jwt-decode";
 import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 import { clearCurrentProfile } from "./actions/profileAction";
+import { clearAllSubjects } from "./actions/subjectAction";
 import { Provider } from "react-redux";
 import store from "./store";
 
@@ -17,6 +18,8 @@ import Register from "./components/auth/Register";
 import Dashboard from "./components/dashboard/Dashboard";
 import CreateProfile from "./components/create-profile/CreateProfile";
 import EditProfile from "./components/edit-profile/EditProfile";
+import RepeatSubjects from "./components/register-subjects/AddRepeatSubjects";
+import NonRepeatSubjects from "./components/register-subjects/AddNonRepeatSubjects";
 
 import "./App.css";
 
@@ -35,6 +38,8 @@ if (localStorage.jwtToken) {
     store.dispatch(logoutUser());
     //clear current profile
     store.dispatch(clearCurrentProfile());
+    //clear load subjects
+    store.dispatch(clearAllSubjects());
     //Redirect to login
     window.location.href = "/login";
   }
@@ -68,6 +73,16 @@ class App extends Component {
                   component={EditProfile}
                 />
               </Switch>
+              <Route
+                exact
+                path="/add-repeat-subjects"
+                component={RepeatSubjects}
+              />
+              <Route
+                exact
+                path="/add-nonRepeat-subjects"
+                component={NonRepeatSubjects}
+              />
             </div>
             <Footer />
           </div>
