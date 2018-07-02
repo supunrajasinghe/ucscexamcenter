@@ -9,6 +9,7 @@ module.exports = function validateExamInput(data) {
   data.semester = !isEmpty(data.semester) ? data.semester : "";
   data.examination = !isEmpty(data.examination) ? data.examination : "";
   data.description = !isEmpty(data.description) ? data.description : "";
+  data.deadline = !isEmpty(data.deadline) ? data.deadline : "";
 
   if (validator.isEmpty(data.degree)) {
     errors.degree = "degree field is required";

@@ -45,6 +45,19 @@ export const getNonRepeatSubjects = () => dispatch => {
     );
 };
 
+//add subjects
+export const addSubject = (subjectData, history) => dispatch => {
+  axios
+    .post("/api/subjects/addsubject", subjectData)
+    .then(res => history.push("/"))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
 //Profile loading
 export const setSubjectLoading = () => {
   return {

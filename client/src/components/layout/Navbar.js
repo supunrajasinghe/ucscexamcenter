@@ -41,23 +41,61 @@ class Navbar extends React.Component {
       </ul>
     );
 
-    const guestLinks = (
+    const adminLinks = (
       <ul className="navbar-nav ml-auto">
         <li className="nav-item">
+          <Link className="nav-link" to="/all-exams">
+            View All Exams
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/add-subjects">
+            Add Subjects
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/add-exams">
+            Add Exams
+          </Link>
+        </li>
+        <li className="nav-item">
+          <Link className="nav-link" to="/">
+            admin
+          </Link>
+        </li>
+        <li className="nav-item">
+          <a
+            href=""
+            onClick={this.onLogoutClick.bind(this)}
+            className="nav-link"
+          >
+            Logout
+          </a>
+        </li>
+      </ul>
+    );
+
+    const guestLinks = (
+      <ul className="nav justify-content-end">
+        <li className="nav-item">
           <Link className="nav-link" to="/register">
-            <span className="glyphicon glyphicon-user" /> Signup
+            <span>
+              <i className="fas fa-user-plus" /> Signup
+            </span>
           </Link>
         </li>
         <li className="nav-item">
           <Link className="nav-link my-sm-0" to="/login">
-            <span className="glyphicon glyphicon-log-in" /> Login
+            <span>
+              <i className="fas fa-sign-in-alt" /> Login
+            </span>
           </Link>
         </li>
       </ul>
     );
 
     return (
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <Link className="navbar-brand" to="/">
           UCSC
         </Link>
@@ -65,25 +103,28 @@ class Navbar extends React.Component {
           className="navbar-toggler"
           type="button"
           data-toggle="collapse"
-          data-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup"
+          data-target="#navbarText"
+          aria-controls="navbarText"
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon" />
         </button>
-        <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div className="navbar-nav">
-            <ul className="nav navbar-nav">
-              <li>
-                <Link className="nav-link" to="/">
-                  Home
-                </Link>
-              </li>
-            </ul>
-
-            {isAuthenticated ? authLinks : guestLinks}
-          </div>
+        <div className="collapse navbar-collapse" id="navbarText">
+          <ul className="navbar-nav mr-auto">
+            <li className="nav-item">
+              <Link className="nav-link" to="/">
+                Home
+              </Link>
+            </li>
+          </ul>
+          <ul className="navbar-nav ml-auto">
+            {isAuthenticated
+              ? user.indexNo === "00000000"
+                ? adminLinks
+                : authLinks
+              : guestLinks}
+          </ul>
         </div>
       </nav>
     );

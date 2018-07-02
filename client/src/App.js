@@ -20,6 +20,9 @@ import CreateProfile from "./components/create-profile/CreateProfile";
 import EditProfile from "./components/edit-profile/EditProfile";
 import RepeatSubjects from "./components/register-subjects/AddRepeatSubjects";
 import NonRepeatSubjects from "./components/register-subjects/AddNonRepeatSubjects";
+import AddSubjects from "./components/admin/AddSubjects";
+import AddExams from "./components/admin/AddExaminations";
+import AllExams from "./components/admin/AllExams";
 
 import "./App.css";
 
@@ -73,16 +76,33 @@ class App extends Component {
                   component={EditProfile}
                 />
               </Switch>
-              <Route
-                exact
-                path="/add-repeat-subjects"
-                component={RepeatSubjects}
-              />
-              <Route
-                exact
-                path="/add-nonRepeat-subjects"
-                component={NonRepeatSubjects}
-              />
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/add-repeat-subjects"
+                  component={RepeatSubjects}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/add-nonRepeat-subjects"
+                  component={NonRepeatSubjects}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/add-subjects"
+                  component={AddSubjects}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute exact path="/add-exams" component={AddExams} />
+              </Switch>
+              <Switch>
+                <PrivateRoute exact path="/all-exams" component={AllExams} />
+              </Switch>
             </div>
             <Footer />
           </div>

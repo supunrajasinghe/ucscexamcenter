@@ -1,37 +1,53 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
+//import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+//import { withRouter } from "react-router-dom";
 import { getAllSubjects } from "../../actions/subjectAction";
-import isEmpty from "../../validation/is-empty";
+//import isEmpty from "../../validation/is-empty";
 import Spinner from "../common/Spinner";
 
 class AddRepeatSubjects extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      subjects: []
+      selectedSubjects: []
     };
 
-    this.onChange = this.onChange.bind(this);
+    this.onClick = this.onClick.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   componentDidMount() {
     this.props.getAllSubjects();
   }
 
-  onChange(e) {
+  onClick(e) {
     e.preventDefault();
-    console.log(e.target.value);
-    // var newArray = [];
-    // newArray.push(e.target.value);
-    // this.setState({ subjects: newArray });
-    // console.log(this.state.subjects);
+    let subject = e.target.dataset.value;
+    console.log(e.target.dataset.value);
+
+    if (this.state.selectedSubjects.includes(subject)) {
+      var index = this.state.selectedSubjects.indexOf(subject);
+      console.log(index);
+      this.setState({
+        selectedSubjects: this.state.selectedSubjects
+          .splice(0, index)
+          .concat(this.state.selectedSubjects.slice(index + 1))
+      });
+    } else {
+      this.setState({
+        selectedSubjects: this.state.selectedSubjects.concat([subject])
+      });
+    }
+  }
+
+  onSubmit(e) {
+    e.preventDefault();
+    console.log(this.state.selectedSubjects);
   }
 
   render() {
     const { repeatSubjects, loading } = this.props.allsubjects;
-
     let AddRepeatSubjectsContent;
     if (repeatSubjects === null || loading) {
       AddRepeatSubjectsContent = <Spinner />;
@@ -40,19 +56,12 @@ class AddRepeatSubjects extends Component {
         <li
           className="list-group-item"
           key={obj.subjectCode}
-          value={obj.subjectCode}
-          onClick={this.onChange}
+          data-value={obj.subjectCode}
+          onClick={this.onClick}
         >
           {obj.subjectCode} - {obj.subjectName}
-          {/* <input
-            type="checkbox"
-            value={obj.subjectCode}
-            onChange={this.onChange}
-            className="form-check-input"
-          /> */}
         </li>
       ));
-
       AddRepeatSubjectsContent = <ul className="list-group ">{list}</ul>;
     }
 
@@ -65,6 +74,9 @@ class AddRepeatSubjects extends Component {
             please update your profile.
           </small>
           <div>{AddRepeatSubjectsContent}</div>
+          <form onSubmit={this.onSubmit}>
+            <button type="submit">465</button>
+          </form>
         </div>
       </div>
     );

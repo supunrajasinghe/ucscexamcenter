@@ -1,17 +1,16 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const AddSubjectStudentSchema = new Schema({
-  indexNO: {},
+const RegisterSubjectSchema = new Schema({
+  indexNo: {
+    type: String,
+    required: true
+  },
+  subjects: {
+    type: [String],
+    required: true
+  },
   degree: {
-    type: String,
-    required: true
-  },
-  subjectCode: {
-    type: String,
-    required: true
-  },
-  subjectName: {
     type: String,
     required: true
   },
@@ -25,7 +24,7 @@ const AddSubjectStudentSchema = new Schema({
   }
 });
 
-module.exports = AddSubjectStudent = mongoose.model(
+module.exports = AddSubject = mongoose.model(
   "registerSubjects",
-  AddSubjectStudentSchema
+  RegisterSubjectSchema
 );

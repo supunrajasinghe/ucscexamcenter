@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
+//import PropTypes from "prop-types";
 import { connect } from "react-redux";
 //import { withRouter } from "react-router-dom";
 import { getNonRepeatSubjects } from "../../actions/subjectAction";
 import Spinner from "../common/Spinner";
-import isEmpty from "../../validation/is-empty";
+//import isEmpty from "../../validation/is-empty";
 
 class AddNonRepeatSubjects extends Component {
   constructor(props) {

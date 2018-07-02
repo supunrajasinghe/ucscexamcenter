@@ -9,7 +9,8 @@ const Profile = require("../../models/profile");
 const User = require("../../models/User");
 //load addsubject model
 const AddSubject = require("../../models/AddSubject");
-//load addsubjectstudents model
+//load register subjects model
+const RegisterSubject = require("../../models/RegisterSubjects");
 
 //load input validations
 const validateAddSubjects = require("../../validation/addSubject");
@@ -133,16 +134,16 @@ router.get(
   }
 );
 
-//@route   POST api/subjects/registersubjects
+//@route   POST api/subjects/registerrepeatsubjects
 //@desc    register subjects for students
 //@access  Public
 router.post("/registersubjects", (req, res) => {
   console.log(req.body);
 
-  const subject = {
+  const subjectFields = {
+    indexNo: req.body.indexNo,
+    subjects: req.body.subjects,
     degree: req.body.degree,
-    subjectCode: req.body.subjectCode,
-    subjectName: req.body.subjectName,
     type: req.body.type
   };
 });
