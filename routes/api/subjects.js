@@ -176,4 +176,25 @@ router.post("/registersubjects", (req, res) => {
   });
 });
 
+//@route   POST api/subjects/getregistersubjects
+//@desc    get register subjects from students
+//@access  Public
+router.get("/getregistersubjects", (req, res) => {
+  const errors = {};
+  RegisterSubject.find()
+    .then(subjects => {
+      if (!subjects) {
+        errors.nosubjects = "There are no students register for subjects";
+        return res.status(404).json(errors);
+      }
+
+      res.json(subjects);
+    })
+    .catch(err =>
+      res
+        .status(404)
+        .json({ prosubjects: "There are no students register for subjects" })
+    );
+});
+
 module.exports = router;

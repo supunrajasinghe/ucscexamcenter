@@ -33,6 +33,13 @@ class Login extends React.Component {
       this.props.history.push("/dashboard");
     }
 
+    if (
+      nextProps.auth.isAuthenticated &&
+      nextProps.auth.user.indexNo === "00000000"
+    ) {
+      this.props.history.push("/");
+    }
+
     if (nextProps.errors) {
       this.setState({ errors: nextProps.errors });
     }
