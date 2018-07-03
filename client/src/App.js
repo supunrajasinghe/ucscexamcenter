@@ -23,6 +23,7 @@ import NonRepeatSubjects from "./components/register-subjects/AddNonRepeatSubjec
 import AddSubjects from "./components/admin/AddSubjects";
 import AddExams from "./components/admin/AddExaminations";
 import AllExams from "./components/admin/AllExams";
+import AllRegisterStudents from "./components/admin/ViewAllRegisterStudents";
 
 import "./App.css";
 
@@ -102,6 +103,13 @@ class App extends Component {
               </Switch>
               <Switch>
                 <PrivateRoute exact path="/all-exams" component={AllExams} />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/all-register-students"
+                  component={AllRegisterStudents}
+                />
               </Switch>
             </div>
             <Footer />

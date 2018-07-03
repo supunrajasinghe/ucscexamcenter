@@ -42,7 +42,12 @@ class Navbar extends React.Component {
     );
 
     const adminLinks = (
-      <ul className="navbar-nav ml-auto">
+      <ul className="navbar-nav ml-auto ">
+        <li className="nav-item">
+          <Link className="nav-link" to="/all-register-students">
+            View All Register Students
+          </Link>
+        </li>
         <li className="nav-item">
           <Link className="nav-link" to="/all-exams">
             View All Exams

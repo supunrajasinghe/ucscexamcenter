@@ -4,7 +4,8 @@ import {
   GET_SUBJECTS_REPEAT,
   GET_SUBJECTS_NONREPEAT,
   CLEAR_SUBJECTS_REPEAT,
-  SUBJECTS_LOADING
+  SUBJECTS_LOADING,
+  GET_REGISTER_SUBJECTS
 } from "./types";
 
 //Get repeat subjects
@@ -34,6 +35,25 @@ export const getNonRepeatSubjects = () => dispatch => {
     .then(res =>
       dispatch({
         type: GET_SUBJECTS_NONREPEAT,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+//get register subjects
+export const getRegisterSubjects = () => dispatch => {
+  dispatch(setSubjectLoading());
+  axios
+    .get("/api/subjects/getregistersubjects")
+    .then(res =>
+      dispatch({
+        type: GET_REGISTER_SUBJECTS,
         payload: res.data
       })
     )
