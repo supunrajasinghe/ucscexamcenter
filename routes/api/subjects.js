@@ -14,6 +14,7 @@ const RegisterSubject = require("../../models/RegisterSubjects");
 
 //load input validations
 const validateAddSubjects = require("../../validation/addSubject");
+const validateRegisterSubjects = require("../../validation/registerSubject");
 
 //@route   GET api/subjects/test
 //@desc    Tests subjects route
@@ -134,11 +135,16 @@ router.get(
   }
 );
 
-//@route   POST api/subjects/registerrepeatsubjects
+//@route   POST api/subjects/registersubjects
 //@desc    register subjects for students
 //@access  Public
 router.post("/registersubjects", (req, res) => {
-  console.log(req.body);
+  // const { errors, isValid } = validateRegisterSubjects(req.body);
+
+  // //check validation
+  // if (!isValid) {
+  //   return res.status(400).json(errors);
+  // }
 
   const subjectFields = {
     indexNo: req.body.indexNo,
@@ -146,6 +152,28 @@ router.post("/registersubjects", (req, res) => {
     degree: req.body.degree,
     type: req.body.type
   };
+
+  RegisterSubject.findOne({
+    indexNo: req.body.indexNo,
+    type: req.body.type
+  }).then(registersubject => {
+    if (registersubject) {
+      //update
+      RegisterSubject.findOneAndUpdate(
+        { indexNo: req.body.indexNo, type: req.body.type },
+        { $set: subjectFields },
+        { new: true }
+      )
+        .then(registersubject => res.json(registersubject))
+        .catch(err => res.json(err));
+    } else {
+      //make new subject and save
+      new RegisterSubject(subjectFields)
+        .save()
+        .then(registersubject => res.json(registersubject))
+        .catch(err => res.json(err));
+    }
+  });
 });
 
 module.exports = router;

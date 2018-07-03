@@ -7,7 +7,7 @@ const RegisterSubjectSchema = new Schema({
     required: true
   },
   subjects: {
-    type: [String],
+    type: String,
     required: true
   },
   degree: {

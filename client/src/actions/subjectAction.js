@@ -58,6 +58,19 @@ export const addSubject = (subjectData, history) => dispatch => {
     );
 };
 
+//add register subjects
+export const addRegisterSubjects = (subjectData, history) => dispatch => {
+  axios
+    .post("/api/subjects/registersubjects", subjectData)
+    .then(res => history.push("/dashboard"))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
 //Profile loading
 export const setSubjectLoading = () => {
   return {

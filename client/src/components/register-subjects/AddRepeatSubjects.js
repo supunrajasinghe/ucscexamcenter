@@ -1,8 +1,12 @@
 import React, { Component } from "react";
-//import PropTypes from "prop-types";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
-//import { withRouter } from "react-router-dom";
-import { getAllSubjects } from "../../actions/subjectAction";
+import { withRouter } from "react-router-dom";
+import {
+  getAllSubjects,
+  addRegisterSubjects
+} from "../../actions/subjectAction";
+import { getCurrentProfile } from "../../actions/profileAction";
 //import isEmpty from "../../validation/is-empty";
 import Spinner from "../common/Spinner";
 
@@ -10,7 +14,11 @@ class AddRepeatSubjects extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedSubjects: []
+      indexNo: "",
+      selectedSubjects: [],
+      degree: "",
+      type: "repeat",
+      errors: {}
     };
 
     this.onClick = this.onClick.bind(this);
@@ -19,16 +27,28 @@ class AddRepeatSubjects extends Component {
 
   componentDidMount() {
     this.props.getAllSubjects();
+    this.props.getCurrentProfile();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+    if (nextProps.profile.profile) {
+      const profile = nextProps.profile.profile;
+      this.setState({
+        indexNo: profile.handle,
+        degree: profile.degree
+      });
+    }
   }
 
   onClick(e) {
     e.preventDefault();
     let subject = e.target.dataset.value;
-    console.log(e.target.dataset.value);
 
     if (this.state.selectedSubjects.includes(subject)) {
       var index = this.state.selectedSubjects.indexOf(subject);
-      console.log(index);
       this.setState({
         selectedSubjects: this.state.selectedSubjects
           .splice(0, index)
@@ -43,7 +63,19 @@ class AddRepeatSubjects extends Component {
 
   onSubmit(e) {
     e.preventDefault();
-    console.log(this.state.selectedSubjects);
+    const subjects = this.state.selectedSubjects.toString();
+    if (subjects === "") {
+      alert("please select subjects");
+    } else {
+      const subjectData = {
+        indexNo: this.state.indexNo,
+        subjects: subjects,
+        degree: this.state.degree,
+        type: this.state.type
+      };
+
+      this.props.addRegisterSubjects(subjectData, this.props.history);
+    }
   }
 
   render() {
@@ -73,9 +105,17 @@ class AddRepeatSubjects extends Component {
             Make sure you are selected your academic year correctly. If not
             please update your profile.
           </small>
-          <div>{AddRepeatSubjectsContent}</div>
+          <div>
+            {AddRepeatSubjectsContent}
+            <br />
+          </div>
+          <div>
+            SELECTED SUBJECTS <hr /> {this.state.selectedSubjects} <hr />
+          </div>
           <form onSubmit={this.onSubmit}>
-            <button type="submit">465</button>
+            <button type="submit" className="btn btn-primary">
+              submit your subjects
+            </button>
           </form>
         </div>
       </div>
@@ -83,17 +123,20 @@ class AddRepeatSubjects extends Component {
   }
 }
 
-// AddRepeatSubjects.propTypes = {
-//   getAllSubjects: PropTypes.func.isRequired,
-//   errors: PropTypes.object.isRequired
-// };
+AddRepeatSubjects.propTypes = {
+  getAllSubjects: PropTypes.func.isRequired,
+  getCurrentProfile: PropTypes.func.isRequired,
+  profile: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
 
 const mapStateToProps = state => ({
   allsubjects: state.subject,
+  profile: state.profile,
   errors: state.errors
 });
 
 export default connect(
   mapStateToProps,
-  { getAllSubjects }
-)(AddRepeatSubjects);
+  { getAllSubjects, getCurrentProfile, addRegisterSubjects }
+)(withRouter(AddRepeatSubjects));
