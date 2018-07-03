@@ -100,7 +100,7 @@ class AddRepeatSubjects extends Component {
     return (
       <div className="container">
         <div className=".addNonRepeatSubjectsHeader ">
-          <h1>SLECET YOUR SUBJECTS</h1>
+          <h1>SLECET YOUR REPEAT SUBJECTS</h1>
           <small>
             Make sure you are selected your academic year correctly. If not
             please update your profile.
@@ -110,7 +110,8 @@ class AddRepeatSubjects extends Component {
             <br />
           </div>
           <div>
-            SELECTED SUBJECTS <hr /> {this.state.selectedSubjects} <hr />
+            <h3>SELECTED SUBJECTS</h3> <hr /> {this.state.selectedSubjects}{" "}
+            <hr />
           </div>
           <form onSubmit={this.onSubmit}>
             <button type="submit" className="btn btn-primary">

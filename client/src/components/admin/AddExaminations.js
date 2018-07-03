@@ -171,6 +171,7 @@ class AddExams extends Component {
               />
 
               <TextFieldGroup
+                type="Date"
                 placeholder="* deadline"
                 name="deadline"
                 value={this.state.deadline}

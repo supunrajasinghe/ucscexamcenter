@@ -1,11 +1,24 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getAllExams } from "../../actions/examAction";
+import { withRouter } from "react-router-dom";
+import { getAllExams, deleteExam } from "../../actions/examAction";
 import Spinner from "../common/Spinner";
 
 class AllExams extends Component {
   componentDidMount() {
     this.props.getAllExams();
+  }
+
+  onDeleteClick(id, degreeCome, yearCome, semesterCome) {
+    const examData = {
+      _id: id,
+      degeree: degreeCome,
+      year: yearCome,
+      semester: semesterCome
+    };
+
+    this.props.deleteExam(examData, this.props.history);
   }
 
   render() {
@@ -25,7 +38,17 @@ class AllExams extends Component {
           <td>{obj.description}</td>
           <td>{obj.deadline}</td>
           <td>
-            <button type="button" className="btn btn-danger">
+            <button
+              onClick={this.onDeleteClick.bind(
+                this,
+                obj._id,
+                obj.degree,
+                obj.year,
+                obj.semester
+              )}
+              type="button"
+              className="btn btn-danger"
+            >
               <i className="far fa-trash-alt" />
             </button>
           </td>
@@ -54,13 +77,17 @@ class AllExams extends Component {
   }
 }
 
+AllExams.propTypes = {
+  allexams: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
 const mapStateToProps = state => ({
   allexams: state.exam,
-  auth: state.auth,
   errors: state.errors
 });
 
 export default connect(
   mapStateToProps,
-  { getAllExams }
-)(AllExams);
+  { getAllExams, deleteExam }
+)(withRouter(AllExams));

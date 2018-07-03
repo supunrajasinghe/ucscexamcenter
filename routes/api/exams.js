@@ -39,7 +39,11 @@ router.post("/exam", (req, res) => {
     type: 1
   };
 
-  Exam.findOne({ examination: req.body.examination }).then(exam => {
+  Exam.findOne({
+    examination: req.body.examination,
+    year: req.body.year,
+    semester: req.body.semester
+  }).then(exam => {
     if (exam) {
       //update
       Exam.findOneAndUpdate(
@@ -135,6 +139,54 @@ router.get("/all", (req, res) => {
     .catch(err =>
       res.status(404).json({ exams: "there are no upcoming exams" })
     );
+});
+
+//@route   get api/exams/delete
+//@desc    delete exams
+//@access  Public
+router.post("/delete", (req, res) => {
+  const errors = {};
+  const setSubject = {
+    type: 0
+  };
+  Exam.findById(req.body._id).then(exam => {
+    if (!exam) {
+      res.status(404).json({ exams: "there is no exam with this id" });
+    }
+    Exam.findByIdAndDelete(req.body._id)
+      .then(
+        AddSubject.find({
+          degree: req.body.degree,
+          year: req.body.year,
+          semester: req.body.semester
+        })
+          .then(subjects => {
+            if (subjects) {
+              AddSubject.updateMany(
+                {
+                  degree: req.body.degree,
+                  year: req.body.year,
+                  semester: req.body.semester
+                },
+                { $set: setSubject },
+                { new: true }
+              )
+                .then(updateSub => {
+                  res.json(updateSub);
+                })
+                .catch(err =>
+                  res
+                    .status(404)
+                    .json({ update: "there are no subjects to update" })
+                );
+            }
+          })
+          .catch(err =>
+            res.status(404).json({ subjects: "there are no subjects update" })
+          )
+      )
+      .catch(err => res.json(err));
+  });
 });
 
 module.exports = router;

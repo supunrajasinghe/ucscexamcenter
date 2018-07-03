@@ -64,11 +64,6 @@ class Navbar extends React.Component {
           </Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link" to="/">
-            admin
-          </Link>
-        </li>
-        <li className="nav-item">
           <a
             href=""
             onClick={this.onLogoutClick.bind(this)}
