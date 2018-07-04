@@ -14,12 +14,11 @@ class AllExams extends Component {
   onDeleteClick(id, degreeCome, yearCome, semesterCome) {
     const examData = {
       _id: id,
-      degeree: degreeCome,
+      degree: degreeCome,
       year: yearCome,
       semester: semesterCome
     };
-
-    this.props.deleteExam(examData, this.props.history);
+    this.props.deleteExam(examData);
   }
 
   render() {

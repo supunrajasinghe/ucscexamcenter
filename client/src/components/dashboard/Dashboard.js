@@ -33,32 +33,32 @@ class Dashboard extends React.Component {
         profile.fixedNo = !isEmpty(profile.fixedNo) ? profile.fixedNo : "";
         dashboardDetails = (
           <ul
-            class="list-group"
+            className="list-group"
             style={{ marginLeft: "5%", marginRight: "5%" }}
           >
-            <li class="list-group-item list-group-item-primary">
+            <li className="list-group-item list-group-item-primary">
               Index number : <b>{profile.handle}</b>
             </li>
-            <li class="list-group-item list-group-item-primary">
+            <li className="list-group-item list-group-item-primary">
               Registration Number : <b>{profile.registrationNo}</b>
             </li>
-            <li class="list-group-item list-group-item-primary">
+            <li className="list-group-item list-group-item-primary">
               Full Name : <b>{profile.fullName}</b>
             </li>
-            <li class="list-group-item list-group-item-primary">
+            <li className="list-group-item list-group-item-primary">
               Name With Initials :<b> {profile.nameWithInitials}</b>
             </li>
-            <li class="list-group-item list-group-item-primary">
+            <li className="list-group-item list-group-item-primary">
               degree : <b>{profile.degree}</b>
             </li>
-            <li class="list-group-item list-group-item-primary">
+            <li className="list-group-item list-group-item-primary">
               year : <b>{profile.year} </b>
             </li>
-            <li class="list-group-item list-group-item-primary">
+            <li className="list-group-item list-group-item-primary">
               Mobile Number : <b>{profile.mobileNo}</b>
             </li>
-            <li class="list-group-item list-group-item-primary">
-              Fixed Number : <b>{profile.fixedNo}</b>
+            <li className="list-group-item list-group-item-primary">
+              Fixed Number : <b>{profile.fixsedNo}</b>
             </li>
           </ul>
         );
@@ -67,7 +67,7 @@ class Dashboard extends React.Component {
           <div style={{ marginBottom: "50px" }}>
             <h4>{profile.nameWithInitials}</h4>
             <ProfileActions />
-            <div class="container" style={{ textAlign: "left" }}>
+            <div className="container" style={{ textAlign: "left" }}>
               {dashboardDetails}
             </div>
             <div style={{ marginLeft: "5%", marginRight: "5%" }}>

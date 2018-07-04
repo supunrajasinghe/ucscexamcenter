@@ -5,7 +5,7 @@ import { GET_ERRORS, GET_ALL_EXAMS, EXAMS_LOADING } from "./types";
 export const addExam = (examData, history) => dispatch => {
   axios
     .post("/api/exams/exam", examData)
-    .then(res => history.push("/"))
+    .then(res => history.push("/all-exams"))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
@@ -34,7 +34,7 @@ export const getAllExams = () => dispatch => {
 };
 
 //delete exam
-export const deleteExam = (examData, history) => dispatch => {
+export const deleteExam = examData => dispatch => {
   if (window.confirm("Are you Sure? This can not be undone")) {
     axios
       .post("/api/exams/delete", examData)

@@ -61,7 +61,6 @@ const mapStateToProps = state => ({
 });
 
 ProfileDetails.propTypes = {
-  getCurrentProfile: PropTypes.func.isRequired,
   getCurrentUserSubjects: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,

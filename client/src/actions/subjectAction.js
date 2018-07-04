@@ -71,7 +71,7 @@ export const getRegisterSubjects = () => dispatch => {
 export const addSubject = (subjectData, history) => dispatch => {
   axios
     .post("/api/subjects/addsubject", subjectData)
-    .then(res => history.push("/"))
+    .then(res => history.push("/all-subjects"))
     .catch(err =>
       dispatch({
         type: GET_ERRORS,
