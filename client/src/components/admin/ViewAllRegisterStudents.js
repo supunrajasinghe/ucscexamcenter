@@ -45,7 +45,9 @@ class ViewAllRegisterStudents extends Component {
       );
     }
 
-    return <div>{AllRegisetrSubjectcontent}</div>;
+    return (
+      <div style={{ marginBottom: "50px" }}>{AllRegisetrSubjectcontent}</div>
+    );
   }
 }
 

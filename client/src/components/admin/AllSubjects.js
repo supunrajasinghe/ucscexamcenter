@@ -63,7 +63,7 @@ class AllSubjects extends Component {
       );
     }
 
-    return <div>{AllSubjectsContent}</div>;
+    return <div style={{ marginBottom: "50px" }}>{AllSubjectsContent}</div>;
   }
 }
 AllSubjects.propTypes = {

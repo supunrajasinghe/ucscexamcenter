@@ -64,12 +64,8 @@ class Dashboard extends React.Component {
         );
 
         dashboardContent = (
-          <div>
-            <h4>
-              <Link to={`/profiles/${profile.handle}`}>
-                {profile.nameWithInitials}
-              </Link>
-            </h4>
+          <div style={{ marginBottom: "50px" }}>
+            <h4>{profile.nameWithInitials}</h4>
             <ProfileActions />
             <div class="container" style={{ textAlign: "left" }}>
               {dashboardDetails}

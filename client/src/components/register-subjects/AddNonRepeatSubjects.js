@@ -98,7 +98,7 @@ class AddNonRepeatSubjects extends Component {
     }
 
     return (
-      <div className="container">
+      <div className="container" style={{ marginBottom: "50px" }}>
         <div className=".addNonRepeatSubjectsHeader ">
           <h1>SLECET YOUR SUBJECTS</h1>
           <small>

@@ -76,7 +76,7 @@ class AllExams extends Component {
       );
     }
 
-    return <div>{AllExamsContent}</div>;
+    return <div style={{ marginBottom: "50px" }}>{AllExamsContent}</div>;
   }
 }
 

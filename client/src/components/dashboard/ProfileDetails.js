@@ -34,7 +34,7 @@ class ProfileDetails extends Component {
         ));
 
         AllRegisetrSubjectcontent = (
-          <table className="table table-hover">
+          <table className="table table-hover ">
             <thead>
               <tr>
                 <th scope="col">Index NO</th>

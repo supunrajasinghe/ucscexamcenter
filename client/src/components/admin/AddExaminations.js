@@ -123,7 +123,7 @@ class AddExams extends Component {
     ];
 
     return (
-      <div>
+      <div style={{ marginBottom: "50px" }}>
         <div className="signUpWindow">
           <div className="row signUpHeader">
             <h1>ADD EXAMS</h1>
