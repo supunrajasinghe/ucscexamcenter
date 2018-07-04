@@ -24,6 +24,7 @@ import AddSubjects from "./components/admin/AddSubjects";
 import AddExams from "./components/admin/AddExaminations";
 import AllExams from "./components/admin/AllExams";
 import AllRegisterStudents from "./components/admin/ViewAllRegisterStudents";
+import AllSubjects from "./components/admin/AllSubjects";
 
 import "./App.css";
 
@@ -109,6 +110,13 @@ class App extends Component {
                   exact
                   path="/all-register-students"
                   component={AllRegisterStudents}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/all-subjects"
+                  component={AllSubjects}
                 />
               </Switch>
             </div>

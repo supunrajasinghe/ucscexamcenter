@@ -5,6 +5,8 @@ import { connect } from "react-redux";
 import { getCurrentProfile } from "../../actions/profileAction";
 import Spinner from "../common/Spinner";
 import ProfileActions from "./ProfileActions";
+import ProfileDetails from "./ProfileDetails";
+import isEmpty from "../../validation/is-empty";
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -21,12 +23,46 @@ class Dashboard extends React.Component {
     const { profile, loading } = this.props.profile;
 
     let dashboardContent;
+    let dashboardDetails;
 
     if (profile === null || loading) {
       dashboardContent = <Spinner />;
     } else {
       //check if logged in user has profile data
       if (Object.keys(profile).length > 0) {
+        profile.fixedNo = !isEmpty(profile.fixedNo) ? profile.fixedNo : "";
+        dashboardDetails = (
+          <ul
+            class="list-group"
+            style={{ marginLeft: "5%", marginRight: "5%" }}
+          >
+            <li class="list-group-item list-group-item-primary">
+              Index number : <b>{profile.handle}</b>
+            </li>
+            <li class="list-group-item list-group-item-primary">
+              Registration Number : <b>{profile.registrationNo}</b>
+            </li>
+            <li class="list-group-item list-group-item-primary">
+              Full Name : <b>{profile.fullName}</b>
+            </li>
+            <li class="list-group-item list-group-item-primary">
+              Name With Initials :<b> {profile.nameWithInitials}</b>
+            </li>
+            <li class="list-group-item list-group-item-primary">
+              degree : <b>{profile.degree}</b>
+            </li>
+            <li class="list-group-item list-group-item-primary">
+              year : <b>{profile.year} </b>
+            </li>
+            <li class="list-group-item list-group-item-primary">
+              Mobile Number : <b>{profile.mobileNo}</b>
+            </li>
+            <li class="list-group-item list-group-item-primary">
+              Fixed Number : <b>{profile.fixedNo}</b>
+            </li>
+          </ul>
+        );
+
         dashboardContent = (
           <div>
             <h4>
@@ -35,6 +71,13 @@ class Dashboard extends React.Component {
               </Link>
             </h4>
             <ProfileActions />
+            <div class="container" style={{ textAlign: "left" }}>
+              {dashboardDetails}
+            </div>
+            <div style={{ marginLeft: "5%", marginRight: "5%" }}>
+              <br />
+              <ProfileDetails />
+            </div>
           </div>
         );
       } else {

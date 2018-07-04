@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { getAllExams, deleteExam } from "../../actions/examAction";
+import Moment from "react-moment";
 import Spinner from "../common/Spinner";
 
 class AllExams extends Component {
@@ -36,7 +37,9 @@ class AllExams extends Component {
           <td>{obj.semester}</td>
           <td>{obj.examination}</td>
           <td>{obj.description}</td>
-          <td>{obj.deadline}</td>
+          <td>
+            <Moment format="YYYY/MM/DD">{obj.deadline}</Moment>
+          </td>
           <td>
             <button
               onClick={this.onDeleteClick.bind(

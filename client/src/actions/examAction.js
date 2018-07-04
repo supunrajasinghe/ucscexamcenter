@@ -35,30 +35,32 @@ export const getAllExams = () => dispatch => {
 
 //delete exam
 export const deleteExam = (examData, history) => dispatch => {
-  axios
-    .post("/api/exams/delete", examData)
-    .then(
-      axios
-        .get("/api/exams/all")
-        .then(res =>
-          dispatch({
-            type: GET_ALL_EXAMS,
-            payload: res.data
-          })
-        )
-        .catch(err =>
-          dispatch({
-            type: GET_ERRORS,
-            payload: err.response.data
-          })
-        )
-    )
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
+  if (window.confirm("Are you Sure? This can not be undone")) {
+    axios
+      .post("/api/exams/delete", examData)
+      .then(
+        axios
+          .get("/api/exams/all")
+          .then(res =>
+            dispatch({
+              type: GET_ALL_EXAMS,
+              payload: res.data
+            })
+          )
+          .catch(err =>
+            dispatch({
+              type: GET_ERRORS,
+              payload: err.response.data
+            })
+          )
+      )
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      );
+  }
 };
 
 //exmas loading

@@ -5,7 +5,9 @@ import {
   GET_SUBJECTS_NONREPEAT,
   CLEAR_SUBJECTS_REPEAT,
   SUBJECTS_LOADING,
-  GET_REGISTER_SUBJECTS
+  GET_REGISTER_SUBJECTS,
+  GET_ALL_SUBJECTS,
+  GET_REGISTER_SUBJECTS_FOR_USER
 } from "./types";
 
 //Get repeat subjects
@@ -83,6 +85,73 @@ export const addRegisterSubjects = (subjectData, history) => dispatch => {
   axios
     .post("/api/subjects/registersubjects", subjectData)
     .then(res => history.push("/dashboard"))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+//get all subjects
+export const getAllSubjectsAdmin = () => dispatch => {
+  dispatch(setSubjectLoading());
+  axios
+    .get("/api/subjects/all")
+    .then(res =>
+      dispatch({
+        type: GET_ALL_SUBJECTS,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
+//delete subject
+export const deleteSubjects = (subjectData, history) => dispatch => {
+  if (window.confirm("Are you Sure? This can not be undone")) {
+    axios
+      .post("/api/subjects/delete", subjectData)
+      .then(
+        axios
+          .get("/api/subjects/all")
+          .then(res =>
+            dispatch({
+              type: GET_ALL_SUBJECTS,
+              payload: res.data
+            })
+          )
+          .catch(err =>
+            dispatch({
+              type: GET_ERRORS,
+              payload: err.response.data
+            })
+          )
+      )
+      .catch(err =>
+        dispatch({
+          type: GET_ERRORS,
+          payload: err.response.data
+        })
+      );
+  }
+};
+
+export const getCurrentUserSubjects = () => dispatch => {
+  dispatch(setSubjectLoading());
+  axios
+    .get("/api/subjects/allregistersubjects")
+    .then(res =>
+      dispatch({
+        type: GET_REGISTER_SUBJECTS_FOR_USER,
+        payload: res.data
+      })
+    )
     .catch(err =>
       dispatch({
         type: GET_ERRORS,

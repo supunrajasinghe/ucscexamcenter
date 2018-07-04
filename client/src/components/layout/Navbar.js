@@ -54,6 +54,11 @@ class Navbar extends React.Component {
           </Link>
         </li>
         <li className="nav-item">
+          <Link className="nav-link" to="/all-subjects">
+            View All Subject
+          </Link>
+        </li>
+        <li className="nav-item">
           <Link className="nav-link" to="/add-subjects">
             Add Subjects
           </Link>
@@ -95,7 +100,10 @@ class Navbar extends React.Component {
     );
 
     return (
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <nav
+        className="navbar navbar-expand-lg navbar-light bg-light"
+        style={{ marginBottom: "20px" }}
+      >
         <Link className="navbar-brand" to="/">
           UCSC
         </Link>

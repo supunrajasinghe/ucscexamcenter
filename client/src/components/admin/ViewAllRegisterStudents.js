@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getRegisterSubjects } from "../../actions/subjectAction";
 import Spinner from "../common/Spinner";
+import Moment from "react-moment";
 
 class ViewAllRegisterStudents extends Component {
   componentDidMount() {
@@ -22,7 +23,9 @@ class ViewAllRegisterStudents extends Component {
           <td>{obj.degree}</td>
           <td>{obj.subjects}</td>
           <td>{obj.type}</td>
-          <td>{obj.date}</td>
+          <td>
+            <Moment format="YYYY/MM/DD">{obj.date}</Moment>
+          </td>
         </tr>
       ));
 

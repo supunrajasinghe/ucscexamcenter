@@ -197,4 +197,64 @@ router.get("/getregistersubjects", (req, res) => {
     );
 });
 
+//@route   get api/subjects/all
+//@desc    get all subjects
+//@access  Public
+router.get("/all", (req, res) => {
+  const errors = {};
+  AddSubject.find()
+    .then(subjects => {
+      if (!subjects) {
+        errors.nosubjects = "There are no upcoming subjects";
+        return res.status(404).send(errors);
+      }
+      res.json(subjects);
+    })
+    .catch(err =>
+      res.status(404).json({ subjects: "there are no upcoming subjects" })
+    );
+});
+
+//@route   get api/subjects/delete
+//@desc    delete selected subject subjects
+//@access  Public
+router.post("/delete", (req, res) => {
+  AddSubject.findById(req.body._id).then(subject => {
+    if (!subject) {
+      res.status(404).json({ exams: "there is no subject with this id" });
+    }
+    AddSubject.findByIdAndDelete(req.body._id).catch(err => res.json(err));
+  });
+});
+
+//@route   get api/subjects/allregistersubjects
+//@desc    get register subjects to user
+//@access  Public
+router.get(
+  "/allregistersubjects",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const errors = {};
+    Profile.findOne({ user: req.user.id })
+      .populate("user", ["email"])
+      .then(profile => {
+        if (!profile) {
+          errors.noprofile = "There is no profile for this user";
+          return res.status(404).json(errors);
+        }
+        RegisterSubject.find({ indexNo: profile.handle })
+          .then(subjects => {
+            if (!subjects) {
+              errors.nosubjects = "There are no subjects for this index no";
+              return res.status(404).json(errors);
+            }
+
+            res.json(subjects);
+          })
+          .catch(err => res.status(404).json(err));
+      })
+      .catch(err => res.status(404).json(err));
+  }
+);
+
 module.exports = router;
